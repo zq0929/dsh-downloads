@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" class="no-js">
 <head>
 <meta charset="UTF-8" />
+<script>document.documentElement.className = 'js';</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>DeepSeek Harness 桌面版下载 | RC 稳定线 / Alpha 尝鲜线（macOS + Windows）</title>
 <meta name="description" content="DeepSeek Harness 桌面版下载：RC 稳定线与 Alpha 尝鲜线，提供 macOS Intel / Apple Silicon 的 dmg、zip 与 Windows x64 安装包，支持国内镜像加速下载，含 SHA-256 校验值。" />
@@ -192,8 +193,8 @@
   .meta-row a { color: var(--dim); }
 
   /* 滚动出现 */
-  .reveal { opacity: 0; transform: translateY(20px); transition: opacity .65s ease, transform .65s cubic-bezier(.2,.7,.3,1); }
-  .reveal.in { opacity: 1; transform: none; }
+  .js .reveal { opacity: 0; transform: translateY(20px); transition: opacity .65s ease, transform .65s cubic-bezier(.2,.7,.3,1); }
+  .js .reveal.in { opacity: 1; transform: none; }
 
   section.block { margin-top: 58px; }
   section.block > h2 { font-size: 20px; margin-bottom: 6px; }
@@ -491,6 +492,11 @@
       if (io) io.observe(n); else n.classList.add('in');
     });
   }
+
+  // 兜底：不依赖 IntersectionObserver 回调，超时后一律显示
+  setTimeout(function () {
+    Array.prototype.forEach.call(document.querySelectorAll('.reveal:not(.in)'), function (n) { n.classList.add('in'); });
+  }, 1500);
 
   function render(lines) {
     var rc = lines[0] || { title: 'RC 稳定线', releases: [] };
