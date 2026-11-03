@@ -40,6 +40,7 @@ jobs:
             echo "release data is unchanged"
             exit 0
           fi
+          git add -A data.json
           git -c user.name="github-actions[bot]" \
               -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
               commit -q -m "Refresh release data"
