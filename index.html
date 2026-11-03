@@ -4,13 +4,13 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>DeepSeek Harness 桌面版下载 | RC 稳定线 / Alpha 尝鲜线（macOS + Windows）</title>
-<meta name="description" content="DeepSeek Harness 桌面版下载页：RC 稳定线与 Alpha 尝鲜线，提供 macOS Intel / Apple Silicon 的 dmg、zip 与 Windows x64 安装包，含 SHA-256 校验值。" />
-<meta name="keywords" content="DeepSeek Harness, DSH, 桌面版, 下载, macOS, Apple Silicon, Intel, Windows, RC, alpha" />
+<meta name="description" content="DeepSeek Harness 桌面版下载：RC 稳定线与 Alpha 尝鲜线，提供 macOS Intel / Apple Silicon 的 dmg、zip 与 Windows x64 安装包，支持国内镜像加速下载，含 SHA-256 校验值。" />
+<meta name="keywords" content="DeepSeek Harness, DSH, 桌面版, 下载, macOS, Apple Silicon, Intel, Windows, RC, alpha, 加速下载" />
 <meta name="robots" content="index, follow" />
 <meta name="theme-color" content="#0a0c12" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="DeepSeek Harness 桌面版下载" />
-<meta property="og:description" content="RC 稳定线 / Alpha 尝鲜线，macOS Intel、Apple Silicon 与 Windows x64 安装包。" />
+<meta property="og:description" content="RC 稳定线 / Alpha 尝鲜线，macOS Intel、Apple Silicon 与 Windows x64，支持镜像加速。" />
 <meta property="og:locale" content="zh_CN" />
 <script type="application/ld+json">
 {
@@ -19,7 +19,7 @@
   "name": "DeepSeek Harness Desktop",
   "applicationCategory": "DeveloperApplication",
   "operatingSystem": ["macOS", "Windows"],
-  "description": "DeepSeek Harness 桌面客户端，提供 RC 稳定线与 Alpha 尝鲜线安装包。",
+  "description": "DeepSeek Harness 桌面客户端，提供 RC 稳定线与 Alpha 尝鲜线安装包，支持国内镜像加速。",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CNY" }
 }
 </script>
@@ -36,7 +36,7 @@
     --accent-2: #7c5cff;
     --rc: #2ecc9b;
     --alpha: #ff9f43;
-    --radius: 14px;
+    --radius: 16px;
     --maxw: 1060px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -44,51 +44,116 @@
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
       "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
-    background: radial-gradient(1200px 600px at 50% -10%, #1a2240 0%, var(--bg) 55%);
-    color: var(--text); line-height: 1.65; min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
+    background: var(--bg); color: var(--text); line-height: 1.65; min-height: 100vh;
+    -webkit-font-smoothing: antialiased; overflow-x: hidden;
   }
   a { color: var(--accent); text-decoration: none; }
   a:hover { text-decoration: underline; }
+
+  /* 背景光斑：缓慢漂移 */
+  .bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+  .bg span {
+    position: absolute; border-radius: 50%; filter: blur(70px); opacity: .5;
+  }
+  .bg .b1 {
+    width: 520px; height: 520px; left: -120px; top: -160px;
+    background: radial-gradient(circle, rgba(91,140,255,.55), transparent 65%);
+    animation: drift 26s ease-in-out infinite;
+  }
+  .bg .b2 {
+    width: 460px; height: 460px; right: -140px; top: 60px;
+    background: radial-gradient(circle, rgba(124,92,255,.45), transparent 65%);
+    animation: drift 34s ease-in-out infinite reverse;
+  }
+  .bg .b3 {
+    width: 420px; height: 420px; left: 40%; top: 62%;
+    background: radial-gradient(circle, rgba(46,204,155,.22), transparent 65%);
+    animation: drift 44s ease-in-out infinite;
+  }
+  @keyframes drift {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    50% { transform: translate3d(46px, -34px, 0) scale(1.09); }
+  }
+
   .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
 
   header.nav {
-    position: sticky; top: 0; z-index: 10; backdrop-filter: blur(12px);
-    background: rgba(10, 12, 18, 0.72); border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 20; backdrop-filter: blur(14px);
+    background: rgba(10, 12, 18, .72); border-bottom: 1px solid var(--border);
   }
   header.nav .wrap { display: flex; align-items: center; gap: 16px; height: 60px; }
-  .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: .2px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; }
   .brand .dot {
     width: 10px; height: 10px; border-radius: 50%;
     background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    box-shadow: 0 0 14px rgba(91,140,255,.7);
+    box-shadow: 0 0 14px rgba(91,140,255,.75);
+    animation: pulseDot 2.6s ease-in-out infinite;
+  }
+  @keyframes pulseDot {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(91,140,255,.55); }
+    50% { box-shadow: 0 0 0 7px rgba(91,140,255,0); }
   }
   header.nav .spacer { flex: 1; }
-  header.nav a.plain { color: var(--dim); font-size: 14px; }
+  header.nav a.plain { color: var(--dim); font-size: 14px; transition: color .18s; }
   header.nav a.plain:hover { color: var(--text); text-decoration: none; }
 
-  .hero { padding: 64px 0 36px; text-align: center; }
-  .hero h1 { font-size: clamp(28px, 4.4vw, 44px); line-height: 1.25; letter-spacing: -0.5px; }
+  .hero { padding: 66px 0 30px; text-align: center; }
+  .hero h1 { font-size: clamp(28px, 4.6vw, 46px); line-height: 1.22; letter-spacing: -.6px; }
   .hero h1 .grad {
-    background: linear-gradient(100deg, var(--accent), var(--accent-2) 60%, #b18cff);
+    background: linear-gradient(100deg, var(--accent), var(--accent-2) 55%, #b18cff);
     -webkit-background-clip: text; background-clip: text; color: transparent;
   }
   .hero p.lead { margin-top: 16px; color: var(--dim); font-size: 16px; }
   .hero .stamp { margin-top: 14px; color: var(--faint); font-size: 13px; }
+  .hero > * { opacity: 0; animation: heroIn .7s cubic-bezier(.2,.7,.3,1) forwards; }
+  .hero h1 { animation-delay: .08s; }
+  .hero p.lead { animation-delay: .18s; }
+  .hero .stamp { animation-delay: .28s; }
+  @keyframes heroIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
 
-  .lines { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); margin-top: 28px; }
+  /* 下载通道 */
+  .channel {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center;
+    margin: 6px 0 22px; opacity: 0; animation: heroIn .7s ease .36s forwards;
+  }
+  .channel .lbl { font-size: 13px; color: var(--faint); }
+  .seg {
+    display: inline-flex; padding: 3px; border: 1px solid var(--border);
+    border-radius: 999px; background: rgba(255,255,255,.03);
+  }
+  .seg button {
+    appearance: none; border: 0; background: transparent; color: var(--dim);
+    font: inherit; font-size: 13px; padding: 6px 14px; border-radius: 999px;
+    cursor: pointer; transition: background .2s, color .2s;
+  }
+  .seg button:hover { color: var(--text); }
+  .seg button.on { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; }
+  select.mirror {
+    appearance: none; background: var(--panel-2); color: var(--text);
+    border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px;
+    font: inherit; font-size: 13px; cursor: pointer;
+  }
+  .channel .hint { font-size: 12px; color: var(--faint); }
+
+  .lines { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
   .card {
     background: linear-gradient(180deg, var(--panel-2), var(--panel));
     border: 1px solid var(--border); border-radius: var(--radius); padding: 22px;
     position: relative; overflow: hidden;
+    transition: transform .3s cubic-bezier(.2,.7,.3,1), border-color .3s, box-shadow .3s;
   }
   .card::before {
     content: ""; position: absolute; inset: 0 0 auto 0; height: 3px;
     background: linear-gradient(90deg, var(--accent), transparent);
-    opacity: .9;
   }
   .card.rc::before { background: linear-gradient(90deg, var(--rc), transparent); }
   .card.alpha::before { background: linear-gradient(90deg, var(--alpha), transparent); }
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(91,140,255,.5);
+    box-shadow: 0 18px 40px -18px rgba(91,140,255,.45);
+  }
+  .card.recommend { border-color: rgba(91,140,255,.65); }
   .card .head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
   .card h2 { font-size: 18px; }
   .tag-line { font-size: 12px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border); color: var(--dim); }
@@ -97,12 +162,20 @@
   .card .ver { margin-top: 10px; font-size: 26px; font-weight: 650; letter-spacing: -.3px; }
   .card .when { color: var(--faint); font-size: 13px; margin-top: 2px; }
   .card .dl { display: grid; gap: 10px; margin-top: 18px; }
+
   .btn {
+    position: relative; overflow: hidden;
     display: flex; align-items: center; justify-content: space-between; gap: 12px;
     padding: 12px 14px; border-radius: 10px; border: 1px solid var(--border);
     background: rgba(255,255,255,.03); color: var(--text); font-size: 14px;
-    transition: border-color .15s, background .15s, transform .1s;
+    transition: border-color .2s, background .2s, transform .12s;
   }
+  .btn::after {
+    content: ""; position: absolute; top: 0; bottom: 0; width: 60%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,.16), transparent);
+    transform: translateX(-160%); transition: transform .55s ease;
+  }
+  .btn:hover::after { transform: translateX(220%); }
   .btn:hover { text-decoration: none; border-color: var(--accent); background: rgba(91,140,255,.1); }
   .btn:active { transform: translateY(1px); }
   .btn .plat { display: flex; align-items: center; gap: 10px; font-weight: 550; }
@@ -110,64 +183,71 @@
   .btn .sub { display: block; color: var(--faint); font-size: 12px; font-weight: 400; }
   .btn.primary { border-color: rgba(91,140,255,.55); background: rgba(91,140,255,.14); }
   .btn.disabled { opacity: .45; pointer-events: none; }
+  .btn .rec {
+    font-size: 11px; padding: 1px 7px; border-radius: 999px;
+    background: rgba(91,140,255,.2); color: #a9c2ff; margin-left: 6px;
+  }
 
   .meta-row { margin-top: 14px; display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; color: var(--faint); }
   .meta-row a { color: var(--dim); }
 
-  section.block { margin-top: 56px; }
+  /* 滚动出现 */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity .65s ease, transform .65s cubic-bezier(.2,.7,.3,1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  section.block { margin-top: 58px; }
   section.block > h2 { font-size: 20px; margin-bottom: 6px; }
   section.block > p.hint { color: var(--dim); font-size: 14px; margin-bottom: 18px; }
 
   details.hist {
-    border: 1px solid var(--border); border-radius: 12px; padding: 0; margin-bottom: 10px;
-    background: var(--panel);
+    border: 1px solid var(--border); border-radius: 12px; margin-bottom: 10px;
+    background: var(--panel); transition: border-color .2s;
   }
-  details.hist > summary {
-    cursor: pointer; padding: 14px 16px; list-style: none; display: flex; gap: 12px;
-    align-items: center; flex-wrap: wrap;
-  }
+  details.hist:hover { border-color: rgba(91,140,255,.4); }
+  details.hist > summary { cursor: pointer; padding: 14px 16px; list-style: none; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
   details.hist > summary::-webkit-details-marker { display: none; }
   details.hist > summary .v { font-weight: 600; }
   details.hist > summary .d { color: var(--faint); font-size: 13px; }
-  details.hist > summary .badge {
-    font-size: 11px; padding: 1px 8px; border-radius: 999px;
-    border: 1px solid rgba(46,204,155,.4); color: var(--rc);
-  }
+  details.hist > summary .badge { font-size: 11px; padding: 1px 8px; border-radius: 999px; border: 1px solid rgba(46,204,155,.4); color: var(--rc); }
   details.hist .body { padding: 4px 16px 16px; border-top: 1px solid var(--border); }
+  details.hist[open] .body { animation: openIn .28s ease; }
+  @keyframes openIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
   .asset-list { display: grid; gap: 6px; margin-top: 12px; }
-  .asset {
-    display: flex; justify-content: space-between; gap: 12px; font-size: 13px;
-    padding: 6px 0; border-bottom: 1px dashed rgba(255,255,255,.06);
-  }
+  .asset { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; padding: 6px 0; border-bottom: 1px dashed rgba(255,255,255,.06); }
   .asset:last-child { border-bottom: none; }
   .asset .n { color: var(--dim); word-break: break-all; }
   .asset .s { color: var(--faint); white-space: nowrap; }
   .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
 
   .notes { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-  .note { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+  .note { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; transition: border-color .2s, transform .2s; }
+  .note:hover { border-color: rgba(91,140,255,.4); transform: translateY(-2px); }
   .note h3 { font-size: 15px; margin-bottom: 8px; }
   .note p, .note li { color: var(--dim); font-size: 13.5px; }
   .note ul { padding-left: 18px; }
-  .note code {
-    background: rgba(255,255,255,.06); padding: 1px 6px; border-radius: 5px;
-    font-size: 12.5px; word-break: break-all;
-  }
-  pre.cmd {
-    background: #0d1018; border: 1px solid var(--border); border-radius: 8px;
-    padding: 10px 12px; overflow-x: auto; font-size: 12.5px; color: #cfe0ff; margin-top: 8px;
-  }
+  .note code { background: rgba(255,255,255,.06); padding: 1px 6px; border-radius: 5px; font-size: 12.5px; word-break: break-all; }
+  pre.cmd { background: #0d1018; border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; overflow-x: auto; font-size: 12.5px; color: #cfe0ff; margin-top: 8px; }
 
-  footer { margin: 64px 0 40px; text-align: center; color: var(--faint); font-size: 13px; }
-  .err { color: #ff7b72; font-size: 13px; }
+  footer { margin: 64px 0 44px; text-align: center; color: var(--faint); font-size: 13px; }
   .skeleton { color: var(--faint); font-size: 14px; }
-  @media (max-width: 520px) {
-    .hero { padding-top: 44px; }
-    .card .ver { font-size: 22px; }
+  .err { color: #ff7b72; font-size: 13px; }
+  .toast {
+    position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 16px);
+    background: #10203a; border: 1px solid rgba(91,140,255,.5); color: #dbe7ff;
+    padding: 10px 16px; border-radius: 10px; font-size: 13px; opacity: 0; pointer-events: none;
+    transition: opacity .25s, transform .25s; z-index: 30;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .hero > *, .channel, .reveal { opacity: 1 !important; transform: none !important; }
   }
 </style>
 </head>
 <body>
+
+<div class="bg"><span class="b1"></span><span class="b2"></span><span class="b3"></span></div>
 
 <header class="nav">
   <div class="wrap">
@@ -190,18 +270,28 @@
     <p class="stamp">数据更新于 <span id="stamp">加载中…</span></p>
   </section>
 
+  <div class="channel">
+    <span class="lbl">下载通道</span>
+    <div class="seg" id="seg">
+      <button type="button" data-channel="official" class="on">官方直连</button>
+      <button type="button" data-channel="mirror">镜像加速</button>
+    </div>
+    <select class="mirror" id="mirror" aria-label="选择镜像"></select>
+    <span class="hint" id="channelHint">直连 GitHub；国内下载慢时切到镜像</span>
+  </div>
+
   <section id="downloads" class="lines" aria-label="最新版本下载">
-    <div class="card rc"><div class="skeleton">正在加载 RC 稳定线…</div></div>
-    <div class="card alpha"><div class="skeleton">正在加载 Alpha 尝鲜线…</div></div>
+    <div class="card rc reveal"><div class="skeleton">正在加载 RC 稳定线…</div></div>
+    <div class="card alpha reveal"><div class="skeleton">正在加载 Alpha 尝鲜线…</div></div>
   </section>
 
-  <section class="block" id="history">
+  <section class="block reveal" id="history">
     <h2>历史版本</h2>
     <p class="hint">每个版本都包含 macOS 两个架构的 dmg / zip 与 Windows 安装包；SHA-256 见各版本附件的 <code>SHA256SUMS.txt</code>。</p>
     <div id="historyBody"><p class="skeleton">正在加载…</p></div>
   </section>
 
-  <section class="block" id="notes">
+  <section class="block reveal" id="notes">
     <h2>安装说明</h2>
     <div class="notes">
       <div class="note">
@@ -222,11 +312,10 @@
         </ul>
       </div>
       <div class="note">
-        <h3>校验与来源</h3>
+        <h3>校验与加速</h3>
         <ul>
-          <li>每个 Release 都附 <code>SHA256SUMS.txt</code>，可用 <code>shasum -a 256 -c SHA256SUMS.txt</code> 校验。</li>
-          <li>安装包由 GitHub Actions 在 macOS / Windows runner 上构建并做签名校验后发布。</li>
-          <li>源码：<a href="https://github.com/deepseek-ai/deepseek-harness" target="_blank" rel="noopener">deepseek-ai/deepseek-harness</a>（MIT）。</li>
+          <li>每个 Release 附 <code>SHA256SUMS.txt</code>，用 <code>shasum -a 256 -c SHA256SUMS.txt</code> 校验。</li>
+          <li>「镜像加速」只是把下载链接改写到第三方 gh-proxy 前缀，文件本身与官方一致；请以 SHA-256 为准。</li>
         </ul>
       </div>
     </div>
@@ -240,10 +329,46 @@
   </div>
 </footer>
 
+<div class="toast" id="toast"></div>
+
 <script>
 (function () {
   var RC_REPO = 'zq0929/dsh-rc';
   var ALPHA_REPO = 'zq0929/dsh-alpha';
+
+  // 镜像 = 前缀 + 完整官方 URL（gh-proxy 系列的通用约定）
+  var MIRRORS = [
+    { id: 'ghfast.top', label: 'ghfast.top', base: 'https://ghfast.top/' },
+    { id: 'v6.gh-proxy.org', label: 'gh-proxy (v6)', base: 'https://v6.gh-proxy.org/' },
+    { id: 'hk.gh-proxy.org', label: 'gh-proxy (hk)', base: 'https://hk.gh-proxy.org/' },
+    { id: 'cdn.gh-proxy.org', label: 'gh-proxy (cdn)', base: 'https://cdn.gh-proxy.org/' },
+    { id: 'edgeone.gh-proxy.org', label: 'gh-proxy (edgeone)', base: 'https://edgeone.gh-proxy.org/' }
+  ];
+  var CHANNEL_KEY = 'dsh-dl-channel';
+  var MIRROR_KEY = 'dsh-dl-mirror';
+  var channel = 'official';
+  var mirrorId = MIRRORS[0].id;
+
+  function loadPrefs() {
+    try {
+      var c = localStorage.getItem(CHANNEL_KEY);
+      if (c === 'official' || c === 'mirror') channel = c;
+      var m = localStorage.getItem(MIRROR_KEY);
+      if (m && MIRRORS.some(function (x) { return x.id === m; })) mirrorId = m;
+    } catch (e) {}
+  }
+  function savePrefs() {
+    try { localStorage.setItem(CHANNEL_KEY, channel); localStorage.setItem(MIRROR_KEY, mirrorId); } catch (e) {}
+  }
+  function mirrorBase() {
+    var m = MIRRORS.filter(function (x) { return x.id === mirrorId; })[0];
+    return m ? m.base : '';
+  }
+  function proxied(url, wantMirror) {
+    if (!wantMirror) return url;
+    if (!/^https:\/\/github\.com\//i.test(url)) return url;
+    return mirrorBase() + url;
+  }
 
   function fmtSize(bytes) {
     if (!bytes && bytes !== 0) return '';
@@ -257,27 +382,39 @@
     return d.toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
   }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]; }); }
-
   function pick(release, suffix) {
-    var a = (release.assets || []).filter(function (x) { return x.name.indexOf(suffix) >= 0; })[0];
-    return a || null;
+    return (release.assets || []).filter(function (x) { return x.name.indexOf(suffix) >= 0; })[0] || null;
+  }
+  function toast(msg) {
+    var el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(el._t);
+    el._t = setTimeout(function () { el.classList.remove('show'); }, 2200);
   }
 
-  function button(asset, title, sub, primary) {
+  // 当前系统，用于推荐标签
+  var OS = (function () {
+    var p = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || '';
+    p = String(p).toLowerCase();
+    if (/win/.test(p)) return 'win';
+    if (/mac/.test(p)) return 'mac';
+    return '';
+  })();
+
+  function button(asset, title, sub, primary, recommend) {
     if (!asset) {
       return '<span class="btn disabled"><span class="plat">' + esc(title) + '<span class="sub">' + esc(sub) + '</span></span><span class="size">暂无</span></span>';
     }
-    return '<a class="btn' + (primary ? ' primary' : '') + '" href="' + esc(asset.url) + '" target="_blank" rel="noopener">' +
-      '<span class="plat">' + esc(title) + '<span class="sub">' + esc(sub) + '</span></span>' +
+    return '<a class="btn' + (primary ? ' primary' : '') + '" data-official="' + esc(asset.url) + '" href="' + esc(proxied(asset.url, channel === 'mirror')) + '" target="_blank" rel="noopener">' +
+      '<span class="plat">' + esc(title) + (recommend ? '<span class="rec">推荐</span>' : '') + '<span class="sub">' + esc(sub) + '</span></span>' +
       '<span class="size">' + esc(fmtSize(asset.size)) + '</span></a>';
   }
 
   function card(line, cls, label) {
     var r = (line.releases || [])[0];
     var head = '<div class="head"><h2>' + esc(line.title) + '</h2><span class="tag-line">' + esc(label) + '</span></div>';
-    if (!r) {
-      return head + '<p class="skeleton" style="margin-top:14px">暂无发布版本</p>';
-    }
+    if (!r) return head + '<p class="skeleton" style="margin-top:14px">暂无发布版本</p>';
     var arm = pick(r, '-macos-arm64.dmg');
     var intel = pick(r, '-macos-x64.dmg');
     var win = pick(r, '-windows-x64');
@@ -286,12 +423,12 @@
       '<div class="ver">' + esc(r.version || r.tag) + '</div>' +
       '<div class="when">' + esc(fmtDate(r.published)) + ' 发布</div>' +
       '<div class="dl">' +
-        button(arm, 'macOS Apple Silicon', 'arm64 · dmg', true) +
-        button(intel, 'macOS Intel', 'x86_64 · dmg', false) +
-        button(win, 'Windows x64', '安装包 · exe', false) +
+        button(arm, 'macOS Apple Silicon', 'arm64 · dmg', true, OS === 'mac') +
+        button(intel, 'macOS Intel', 'x86_64 · dmg', false, false) +
+        button(win, 'Windows x64', '安装包 · exe', false, OS === 'win') +
       '</div>' +
       '<div class="meta-row">' +
-        (sum ? '<a href="' + esc(sum.url) + '" target="_blank" rel="noopener">SHA-256 校验值</a>' : '') +
+        (sum ? '<a data-official="' + esc(sum.url) + '" href="' + esc(proxied(sum.url, channel === 'mirror')) + '" target="_blank" rel="noopener">SHA-256 校验值</a>' : '') +
         '<a href="' + esc(r.url) + '" target="_blank" rel="noopener">Release 页面</a>' +
         '<a href="#history">全部版本</a>' +
       '</div>';
@@ -301,7 +438,7 @@
     if (!items.length) return '<p class="skeleton">暂无数据</p>';
     return items.map(function (r) {
       var assets = (r.assets || []).map(function (a) {
-        return '<div class="asset"><a class="n" href="' + esc(a.url) + '" target="_blank" rel="noopener">' + esc(a.name) + '</a><span class="s">' + esc(fmtSize(a.size)) + '</span></div>';
+        return '<div class="asset"><a class="n" data-official="' + esc(a.url) + '" href="' + esc(proxied(a.url, channel === 'mirror')) + '" target="_blank" rel="noopener">' + esc(a.name) + '</a><span class="s">' + esc(fmtSize(a.size)) + '</span></div>';
       }).join('');
       return '<details class="hist"><summary>' +
         '<span class="v">' + esc(r.version || r.tag) + '</span>' +
@@ -312,7 +449,7 @@
     }).join('');
   }
 
-  function withVersion(repo, raw) {
+  function withVersion(raw) {
     return (raw || []).map(function (r) {
       var tag = r.tag_name || '';
       return {
@@ -321,40 +458,93 @@
         published: r.published_at,
         prerelease: r.prerelease,
         url: r.html_url,
-        assets: (r.assets || []).map(function (a) {
-          return { name: a.name, url: a.browser_download_url, size: a.size };
-        })
+        assets: (r.assets || []).map(function (a) { return { name: a.name, url: a.browser_download_url, size: a.size }; })
       };
     });
   }
-
   function fromJson(d) {
     return (d.lines || []).map(function (l) {
-      return { title: l.label, repo: l.repo, releases: (l.releases || []).map(function (r) {
+      return { title: l.label, releases: (l.releases || []).map(function (r) {
         return { tag: r.tag, version: r.version, published: r.published, prerelease: r.prerelease, url: r.url, assets: r.assets };
       }) };
     });
   }
-
   async function fromApi(repo) {
     var res = await fetch('https://api.github.com/repos/' + repo + '/releases?per_page=20', {
       headers: { accept: 'application/vnd.github+json' }, cache: 'no-store'
     });
     if (!res.ok) throw new Error('GitHub API ' + res.status);
-    return withVersion(repo, await res.json());
+    return withVersion(await res.json());
+  }
+
+  // 入场动画：滚动到视口内再出现
+  var io = ('IntersectionObserver' in window) ? new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) { entry.target.classList.add('in'); io.unobserve(entry.target); }
+    });
+  }, { threshold: 0.12 }) : null;
+
+  function observeReveals(root) {
+    var nodes = (root || document).querySelectorAll('.reveal:not(.in)');
+    Array.prototype.forEach.call(nodes, function (n, i) {
+      n.style.transitionDelay = Math.min(i * 60, 240) + 'ms';
+      if (io) io.observe(n); else n.classList.add('in');
+    });
   }
 
   function render(lines) {
     var rc = lines[0] || { title: 'RC 稳定线', releases: [] };
     var alpha = lines[1] || { title: 'Alpha 尝鲜线', releases: [] };
     document.getElementById('downloads').innerHTML =
-      '<div class="card rc">' + card(rc, 'rc', '稳定') + '</div>' +
-      '<div class="card alpha">' + card(alpha, 'alpha', '尝鲜') + '</div>';
+      '<div class="card rc reveal">' + card(rc, 'rc', '稳定') + '</div>' +
+      '<div class="card alpha reveal">' + card(alpha, 'alpha', '尝鲜') + '</div>';
     document.getElementById('historyBody').innerHTML =
       '<h3 style="font-size:15px;margin:18px 0 8px;color:var(--rc)">RC 稳定线</h3>' + history(rc.releases || []) +
       '<h3 style="font-size:15px;margin:26px 0 8px;color:var(--alpha)">Alpha 尝鲜线</h3>' + history(alpha.releases || []);
     document.getElementById('stamp').textContent = fmtDate(lines.generatedAt || new Date().toISOString());
+    observeReveals(document);
   }
+
+  // 切换通道后改写所有下载链接
+  function applyChannel() {
+    Array.prototype.forEach.call(document.querySelectorAll('[data-official]'), function (a) {
+      a.href = proxied(a.getAttribute('data-official'), channel === 'mirror');
+    });
+    var seg = document.getElementById('seg');
+    Array.prototype.forEach.call(seg.querySelectorAll('button'), function (b) {
+      b.classList.toggle('on', b.getAttribute('data-channel') === channel);
+    });
+    var select = document.getElementById('mirror');
+    select.style.display = channel === 'mirror' ? '' : 'none';
+    document.getElementById('channelHint').textContent = channel === 'mirror'
+      ? '当前：' + (MIRRORS.filter(function (m) { return m.id === mirrorId; })[0] || {}).label + ' 中转，慢或失败请换镜像或切回官方'
+      : '直连 GitHub；国内下载慢时切到镜像';
+    savePrefs();
+  }
+
+  function initChannelUi() {
+    var select = document.getElementById('mirror');
+    select.innerHTML = MIRRORS.map(function (m) {
+      return '<option value="' + esc(m.id) + '"' + (m.id === mirrorId ? ' selected' : '') + '>' + esc(m.label) + '</option>';
+    }).join('');
+    select.addEventListener('change', function () {
+      mirrorId = select.value;
+      channel = 'mirror';
+      applyChannel();
+      toast('已切换到 ' + select.value);
+    });
+    document.getElementById('seg').addEventListener('click', function (e) {
+      var btn = e.target.closest('button[data-channel]');
+      if (!btn) return;
+      channel = btn.getAttribute('data-channel');
+      applyChannel();
+      toast(channel === 'mirror' ? '已切换：镜像加速' : '已切换：官方直连');
+    });
+    applyChannel();
+  }
+
+  loadPrefs();
+  initChannelUi();
 
   (async function () {
     try {
@@ -363,19 +553,18 @@
       var data = await res.json();
       var lines = fromJson(data);
       lines.generatedAt = data.generatedAt;
-      var missing = lines.some(function (l) { return !l.releases || !l.releases.length; });
-      if (missing) throw new Error('data.json is empty');
+      if (lines.some(function (l) { return !l.releases || !l.releases.length; })) throw new Error('empty');
       render(lines);
+      applyChannel();
       return;
-    } catch (e) {
-      // Fall back to the public API so the page still works before the first refresh.
-    }
+    } catch (e) { /* 回退到直连 API */ }
     try {
       var results = await Promise.all([fromApi(RC_REPO), fromApi(ALPHA_REPO)]);
       render([
         { title: 'RC 稳定线', releases: results[0] },
         { title: 'Alpha 尝鲜线', releases: results[1] }
       ]);
+      applyChannel();
     } catch (e2) {
       document.getElementById('downloads').innerHTML =
         '<div class="card"><p class="err">加载失败：' + esc(e2.message) + '</p>' +
