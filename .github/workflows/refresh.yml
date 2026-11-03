@@ -1,0 +1,46 @@
+# Regenerate data.json from the two build repositories.
+#
+# The downloads page reads data.json, so it needs no GitHub API access at view time and
+# keeps working when the unauthenticated rate limit is exhausted.
+
+name: Refresh release data
+
+on:
+  schedule:
+    # Hourly; a new release is picked up within the hour.
+    - cron: '23 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - uses: actions/setup-node@v7.0.0
+        with:
+          node-version: '24'
+
+      - name: Collect the releases of both lines
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/collect.mjs
+
+      - name: Commit when the data changed
+        run: |
+          if git diff --quiet -- data.json; then
+            echo "release data is unchanged"
+            exit 0
+          fi
+          git -c user.name="github-actions[bot]" \
+              -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              commit -q -m "Refresh release data"
+          git push

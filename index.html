@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DeepSeek Harness 桌面版下载 | RC 稳定线 / Alpha 尝鲜线（macOS + Windows）</title>
+<meta name="description" content="DeepSeek Harness 桌面版下载页：RC 稳定线与 Alpha 尝鲜线，提供 macOS Intel / Apple Silicon 的 dmg、zip 与 Windows x64 安装包，含 SHA-256 校验值。" />
+<meta name="keywords" content="DeepSeek Harness, DSH, 桌面版, 下载, macOS, Apple Silicon, Intel, Windows, RC, alpha" />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#0a0c12" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="DeepSeek Harness 桌面版下载" />
+<meta property="og:description" content="RC 稳定线 / Alpha 尝鲜线，macOS Intel、Apple Silicon 与 Windows x64 安装包。" />
+<meta property="og:locale" content="zh_CN" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "DeepSeek Harness Desktop",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": ["macOS", "Windows"],
+  "description": "DeepSeek Harness 桌面客户端，提供 RC 稳定线与 Alpha 尝鲜线安装包。",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CNY" }
+}
+</script>
+<style>
+  :root {
+    --bg: #0a0c12;
+    --panel: #141824;
+    --panel-2: #1a1f2d;
+    --border: #262d3d;
+    --text: #e8ecf4;
+    --dim: #9aa4ba;
+    --faint: #6b7490;
+    --accent: #5b8cff;
+    --accent-2: #7c5cff;
+    --rc: #2ecc9b;
+    --alpha: #ff9f43;
+    --radius: 14px;
+    --maxw: 1060px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+      "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    background: radial-gradient(1200px 600px at 50% -10%, #1a2240 0%, var(--bg) 55%);
+    color: var(--text); line-height: 1.65; min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
+
+  header.nav {
+    position: sticky; top: 0; z-index: 10; backdrop-filter: blur(12px);
+    background: rgba(10, 12, 18, 0.72); border-bottom: 1px solid var(--border);
+  }
+  header.nav .wrap { display: flex; align-items: center; gap: 16px; height: 60px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: .2px; }
+  .brand .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    box-shadow: 0 0 14px rgba(91,140,255,.7);
+  }
+  header.nav .spacer { flex: 1; }
+  header.nav a.plain { color: var(--dim); font-size: 14px; }
+  header.nav a.plain:hover { color: var(--text); text-decoration: none; }
+
+  .hero { padding: 64px 0 36px; text-align: center; }
+  .hero h1 { font-size: clamp(28px, 4.4vw, 44px); line-height: 1.25; letter-spacing: -0.5px; }
+  .hero h1 .grad {
+    background: linear-gradient(100deg, var(--accent), var(--accent-2) 60%, #b18cff);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero p.lead { margin-top: 16px; color: var(--dim); font-size: 16px; }
+  .hero .stamp { margin-top: 14px; color: var(--faint); font-size: 13px; }
+
+  .lines { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); margin-top: 28px; }
+  .card {
+    background: linear-gradient(180deg, var(--panel-2), var(--panel));
+    border: 1px solid var(--border); border-radius: var(--radius); padding: 22px;
+    position: relative; overflow: hidden;
+  }
+  .card::before {
+    content: ""; position: absolute; inset: 0 0 auto 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: .9;
+  }
+  .card.rc::before { background: linear-gradient(90deg, var(--rc), transparent); }
+  .card.alpha::before { background: linear-gradient(90deg, var(--alpha), transparent); }
+  .card .head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .card h2 { font-size: 18px; }
+  .tag-line { font-size: 12px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border); color: var(--dim); }
+  .card.rc .tag-line { color: var(--rc); border-color: rgba(46,204,155,.4); }
+  .card.alpha .tag-line { color: var(--alpha); border-color: rgba(255,159,67,.4); }
+  .card .ver { margin-top: 10px; font-size: 26px; font-weight: 650; letter-spacing: -.3px; }
+  .card .when { color: var(--faint); font-size: 13px; margin-top: 2px; }
+  .card .dl { display: grid; gap: 10px; margin-top: 18px; }
+  .btn {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 12px 14px; border-radius: 10px; border: 1px solid var(--border);
+    background: rgba(255,255,255,.03); color: var(--text); font-size: 14px;
+    transition: border-color .15s, background .15s, transform .1s;
+  }
+  .btn:hover { text-decoration: none; border-color: var(--accent); background: rgba(91,140,255,.1); }
+  .btn:active { transform: translateY(1px); }
+  .btn .plat { display: flex; align-items: center; gap: 10px; font-weight: 550; }
+  .btn .size { color: var(--faint); font-size: 12px; white-space: nowrap; }
+  .btn .sub { display: block; color: var(--faint); font-size: 12px; font-weight: 400; }
+  .btn.primary { border-color: rgba(91,140,255,.55); background: rgba(91,140,255,.14); }
+  .btn.disabled { opacity: .45; pointer-events: none; }
+
+  .meta-row { margin-top: 14px; display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; color: var(--faint); }
+  .meta-row a { color: var(--dim); }
+
+  section.block { margin-top: 56px; }
+  section.block > h2 { font-size: 20px; margin-bottom: 6px; }
+  section.block > p.hint { color: var(--dim); font-size: 14px; margin-bottom: 18px; }
+
+  details.hist {
+    border: 1px solid var(--border); border-radius: 12px; padding: 0; margin-bottom: 10px;
+    background: var(--panel);
+  }
+  details.hist > summary {
+    cursor: pointer; padding: 14px 16px; list-style: none; display: flex; gap: 12px;
+    align-items: center; flex-wrap: wrap;
+  }
+  details.hist > summary::-webkit-details-marker { display: none; }
+  details.hist > summary .v { font-weight: 600; }
+  details.hist > summary .d { color: var(--faint); font-size: 13px; }
+  details.hist > summary .badge {
+    font-size: 11px; padding: 1px 8px; border-radius: 999px;
+    border: 1px solid rgba(46,204,155,.4); color: var(--rc);
+  }
+  details.hist .body { padding: 4px 16px 16px; border-top: 1px solid var(--border); }
+  .asset-list { display: grid; gap: 6px; margin-top: 12px; }
+  .asset {
+    display: flex; justify-content: space-between; gap: 12px; font-size: 13px;
+    padding: 6px 0; border-bottom: 1px dashed rgba(255,255,255,.06);
+  }
+  .asset:last-child { border-bottom: none; }
+  .asset .n { color: var(--dim); word-break: break-all; }
+  .asset .s { color: var(--faint); white-space: nowrap; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+  .notes { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .note { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+  .note h3 { font-size: 15px; margin-bottom: 8px; }
+  .note p, .note li { color: var(--dim); font-size: 13.5px; }
+  .note ul { padding-left: 18px; }
+  .note code {
+    background: rgba(255,255,255,.06); padding: 1px 6px; border-radius: 5px;
+    font-size: 12.5px; word-break: break-all;
+  }
+  pre.cmd {
+    background: #0d1018; border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px 12px; overflow-x: auto; font-size: 12.5px; color: #cfe0ff; margin-top: 8px;
+  }
+
+  footer { margin: 64px 0 40px; text-align: center; color: var(--faint); font-size: 13px; }
+  .err { color: #ff7b72; font-size: 13px; }
+  .skeleton { color: var(--faint); font-size: 14px; }
+  @media (max-width: 520px) {
+    .hero { padding-top: 44px; }
+    .card .ver { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span> DeepSeek Harness · Desktop</div>
+    <div class="spacer"></div>
+    <a class="plain" href="#downloads">下载</a>
+    <a class="plain" href="#history">历史版本</a>
+    <a class="plain" href="#notes">说明</a>
+    <a class="plain" href="https://github.com/deepseek-ai/deepseek-harness" target="_blank" rel="noopener">上游仓库</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>DeepSeek Harness<br /><span class="grad">桌面版下载</span></h1>
+    <p class="lead">
+      两条发布线：<strong>RC 稳定线</strong>（跟进上游 RC 标签）与 <strong>Alpha 尝鲜线</strong>（跟进上游 Alpha 标签）。<br />
+      覆盖 macOS Intel、macOS Apple Silicon 与 Windows x64。
+    </p>
+    <p class="stamp">数据更新于 <span id="stamp">加载中…</span></p>
+  </section>
+
+  <section id="downloads" class="lines" aria-label="最新版本下载">
+    <div class="card rc"><div class="skeleton">正在加载 RC 稳定线…</div></div>
+    <div class="card alpha"><div class="skeleton">正在加载 Alpha 尝鲜线…</div></div>
+  </section>
+
+  <section class="block" id="history">
+    <h2>历史版本</h2>
+    <p class="hint">每个版本都包含 macOS 两个架构的 dmg / zip 与 Windows 安装包；SHA-256 见各版本附件的 <code>SHA256SUMS.txt</code>。</p>
+    <div id="historyBody"><p class="skeleton">正在加载…</p></div>
+  </section>
+
+  <section class="block" id="notes">
+    <h2>安装说明</h2>
+    <div class="notes">
+      <div class="note">
+        <h3>macOS</h3>
+        <ul>
+          <li>打开 dmg，把 <strong>DeepSeek Harness.app</strong> 拖进「应用程序」。</li>
+          <li>Apple Silicon 选 <code>macos-arm64</code>，Intel 选 <code>macos-x64</code>。</li>
+          <li>包是 <strong>ad-hoc 签名、未公证</strong>，首次打开会被 Gatekeeper 拦下。</li>
+        </ul>
+        <pre class="cmd">xattr -dr com.apple.quarantine "/Applications/DeepSeek Harness.app"</pre>
+        <p style="margin-top:8px">浏览器下载的文件都带隔离标记；用 <code>curl -L -o x.dmg &lt;链接&gt;</code> 下载则不需要这一步。</p>
+      </div>
+      <div class="note">
+        <h3>Windows</h3>
+        <ul>
+          <li>下载 <code>windows-x64-unsigned.exe</code> 直接安装。</li>
+          <li>安装包未签名，SmartScreen 会提示：点「更多信息」→「仍要运行」。</li>
+        </ul>
+      </div>
+      <div class="note">
+        <h3>校验与来源</h3>
+        <ul>
+          <li>每个 Release 都附 <code>SHA256SUMS.txt</code>，可用 <code>shasum -a 256 -c SHA256SUMS.txt</code> 校验。</li>
+          <li>安装包由 GitHub Actions 在 macOS / Windows runner 上构建并做签名校验后发布。</li>
+          <li>源码：<a href="https://github.com/deepseek-ai/deepseek-harness" target="_blank" rel="noopener">deepseek-ai/deepseek-harness</a>（MIT）。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    内部构建，非官方发布产物 · 版本数据由 <a href="https://github.com/zq0929/dsh-rc" target="_blank" rel="noopener">dsh-rc</a>
+    与 <a href="https://github.com/zq0929/dsh-alpha" target="_blank" rel="noopener">dsh-alpha</a> 的 Release 自动生成
+  </div>
+</footer>
+
+<script>
+(function () {
+  var RC_REPO = 'zq0929/dsh-rc';
+  var ALPHA_REPO = 'zq0929/dsh-alpha';
+
+  function fmtSize(bytes) {
+    if (!bytes && bytes !== 0) return '';
+    var mb = bytes / 1048576;
+    return mb >= 1024 ? (mb / 1024).toFixed(2) + ' GB' : Math.round(mb) + ' MB';
+  }
+  function fmtDate(iso) {
+    if (!iso) return '';
+    var d = new Date(iso);
+    if (isNaN(d)) return '';
+    return d.toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+  }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]; }); }
+
+  function pick(release, suffix) {
+    var a = (release.assets || []).filter(function (x) { return x.name.indexOf(suffix) >= 0; })[0];
+    return a || null;
+  }
+
+  function button(asset, title, sub, primary) {
+    if (!asset) {
+      return '<span class="btn disabled"><span class="plat">' + esc(title) + '<span class="sub">' + esc(sub) + '</span></span><span class="size">暂无</span></span>';
+    }
+    return '<a class="btn' + (primary ? ' primary' : '') + '" href="' + esc(asset.url) + '" target="_blank" rel="noopener">' +
+      '<span class="plat">' + esc(title) + '<span class="sub">' + esc(sub) + '</span></span>' +
+      '<span class="size">' + esc(fmtSize(asset.size)) + '</span></a>';
+  }
+
+  function card(line, cls, label) {
+    var r = (line.releases || [])[0];
+    var head = '<div class="head"><h2>' + esc(line.title) + '</h2><span class="tag-line">' + esc(label) + '</span></div>';
+    if (!r) {
+      return head + '<p class="skeleton" style="margin-top:14px">暂无发布版本</p>';
+    }
+    var arm = pick(r, '-macos-arm64.dmg');
+    var intel = pick(r, '-macos-x64.dmg');
+    var win = pick(r, '-windows-x64');
+    var sum = pick(r, 'SHA256SUMS.txt');
+    return head +
+      '<div class="ver">' + esc(r.version || r.tag) + '</div>' +
+      '<div class="when">' + esc(fmtDate(r.published)) + ' 发布</div>' +
+      '<div class="dl">' +
+        button(arm, 'macOS Apple Silicon', 'arm64 · dmg', true) +
+        button(intel, 'macOS Intel', 'x86_64 · dmg', false) +
+        button(win, 'Windows x64', '安装包 · exe', false) +
+      '</div>' +
+      '<div class="meta-row">' +
+        (sum ? '<a href="' + esc(sum.url) + '" target="_blank" rel="noopener">SHA-256 校验值</a>' : '') +
+        '<a href="' + esc(r.url) + '" target="_blank" rel="noopener">Release 页面</a>' +
+        '<a href="#history">全部版本</a>' +
+      '</div>';
+  }
+
+  function history(items) {
+    if (!items.length) return '<p class="skeleton">暂无数据</p>';
+    return items.map(function (r) {
+      var assets = (r.assets || []).map(function (a) {
+        return '<div class="asset"><a class="n" href="' + esc(a.url) + '" target="_blank" rel="noopener">' + esc(a.name) + '</a><span class="s">' + esc(fmtSize(a.size)) + '</span></div>';
+      }).join('');
+      return '<details class="hist"><summary>' +
+        '<span class="v">' + esc(r.version || r.tag) + '</span>' +
+        (r.prerelease ? '<span class="badge">pre-release</span>' : '') +
+        '<span class="d">' + esc(fmtDate(r.published)) + '</span>' +
+        '<span class="d" style="margin-left:auto">' + (r.assets || []).length + ' 个文件</span>' +
+        '</summary><div class="body"><div class="asset-list">' + assets + '</div></div></details>';
+    }).join('');
+  }
+
+  function withVersion(repo, raw) {
+    return (raw || []).map(function (r) {
+      var tag = r.tag_name || '';
+      return {
+        tag: tag,
+        version: tag.replace(/^dsh-v/, ''),
+        published: r.published_at,
+        prerelease: r.prerelease,
+        url: r.html_url,
+        assets: (r.assets || []).map(function (a) {
+          return { name: a.name, url: a.browser_download_url, size: a.size };
+        })
+      };
+    });
+  }
+
+  function fromJson(d) {
+    return (d.lines || []).map(function (l) {
+      return { title: l.label, repo: l.repo, releases: (l.releases || []).map(function (r) {
+        return { tag: r.tag, version: r.version, published: r.published, prerelease: r.prerelease, url: r.url, assets: r.assets };
+      }) };
+    });
+  }
+
+  async function fromApi(repo) {
+    var res = await fetch('https://api.github.com/repos/' + repo + '/releases?per_page=20', {
+      headers: { accept: 'application/vnd.github+json' }, cache: 'no-store'
+    });
+    if (!res.ok) throw new Error('GitHub API ' + res.status);
+    return withVersion(repo, await res.json());
+  }
+
+  function render(lines) {
+    var rc = lines[0] || { title: 'RC 稳定线', releases: [] };
+    var alpha = lines[1] || { title: 'Alpha 尝鲜线', releases: [] };
+    document.getElementById('downloads').innerHTML =
+      '<div class="card rc">' + card(rc, 'rc', '稳定') + '</div>' +
+      '<div class="card alpha">' + card(alpha, 'alpha', '尝鲜') + '</div>';
+    document.getElementById('historyBody').innerHTML =
+      '<h3 style="font-size:15px;margin:18px 0 8px;color:var(--rc)">RC 稳定线</h3>' + history(rc.releases || []) +
+      '<h3 style="font-size:15px;margin:26px 0 8px;color:var(--alpha)">Alpha 尝鲜线</h3>' + history(alpha.releases || []);
+    document.getElementById('stamp').textContent = fmtDate(lines.generatedAt || new Date().toISOString());
+  }
+
+  (async function () {
+    try {
+      var res = await fetch('data.json?ts=' + Date.now(), { cache: 'no-store' });
+      if (!res.ok) throw new Error('no data.json');
+      var data = await res.json();
+      var lines = fromJson(data);
+      lines.generatedAt = data.generatedAt;
+      var missing = lines.some(function (l) { return !l.releases || !l.releases.length; });
+      if (missing) throw new Error('data.json is empty');
+      render(lines);
+      return;
+    } catch (e) {
+      // Fall back to the public API so the page still works before the first refresh.
+    }
+    try {
+      var results = await Promise.all([fromApi(RC_REPO), fromApi(ALPHA_REPO)]);
+      render([
+        { title: 'RC 稳定线', releases: results[0] },
+        { title: 'Alpha 尝鲜线', releases: results[1] }
+      ]);
+    } catch (e2) {
+      document.getElementById('downloads').innerHTML =
+        '<div class="card"><p class="err">加载失败：' + esc(e2.message) + '</p>' +
+        '<p style="margin-top:8px"><a href="https://github.com/' + RC_REPO + '/releases" target="_blank" rel="noopener">直接去 RC Release</a> · ' +
+        '<a href="https://github.com/' + ALPHA_REPO + '/releases" target="_blank" rel="noopener">Alpha Release</a></p></div>';
+    }
+  })();
+})();
+</script>
+</body>
+</html>
