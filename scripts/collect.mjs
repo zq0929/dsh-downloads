@@ -6,7 +6,7 @@
  * unreachable.
  */
 
-import { writeFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 
 const LINES = [
   { key: 'rc', label: 'RC 稳定线', repo: 'zq0929/dsh-rc' },
@@ -49,5 +49,21 @@ for (const line of LINES) {
 }
 
 const out = { generatedAt: new Date().toISOString(), lines };
+
+// Keep the file byte-stable when nothing changed, so the hourly run does not commit a
+// new timestamp every hour.
+const previous = await readFile('data.json', 'utf8').catch(() => null);
+if (previous !== null) {
+  try {
+    const parsed = JSON.parse(previous);
+    if (JSON.stringify(parsed.lines) === JSON.stringify(out.lines)) {
+      console.log('release data is unchanged; keeping the existing data.json');
+      process.exit(0);
+    }
+  } catch {
+    // A broken file is simply replaced below.
+  }
+}
+
 await writeFile('data.json', JSON.stringify(out, null, 2) + '\n');
 console.log('wrote data.json:', lines.map(line => `${line.key}=${line.releases.length}`).join(' '));
