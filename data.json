@@ -1,11 +1,57 @@
 {
-  "generatedAt": "2026-11-11T22:00:16.725Z",
+  "generatedAt": "2026-11-13T22:41:47.889Z",
   "lines": [
     {
       "key": "rc",
       "label": "RC 稳定线",
       "repo": "zq0929/dsh-rc",
       "releases": [
+        {
+          "tag": "dsh-v0.2.2-rc.3",
+          "version": "0.2.2-rc.3",
+          "title": "DeepSeek Harness desktop 0.2.2-rc.3",
+          "published": "2026-11-13T18:50:41Z",
+          "prerelease": true,
+          "url": "https://github.com/zq0929/dsh-rc/releases/tag/dsh-v0.2.2-rc.3",
+          "assets": [
+            {
+              "name": "deepseek-harness-0.2.2-rc.3-macos-arm64.dmg",
+              "url": "https://github.com/zq0929/dsh-rc/releases/download/dsh-v0.2.2-rc.3/deepseek-harness-0.2.2-rc.3-macos-arm64.dmg",
+              "size": 276896544,
+              "digest": "sha256:c631ff61e6ca248553907ea1fd20843725b1158e5546eb1b9e68f5f6deb61484"
+            },
+            {
+              "name": "deepseek-harness-0.2.2-rc.3-macos-arm64.zip",
+              "url": "https://github.com/zq0929/dsh-rc/releases/download/dsh-v0.2.2-rc.3/deepseek-harness-0.2.2-rc.3-macos-arm64.zip",
+              "size": 376722546,
+              "digest": "sha256:9b4dcb38680790ed83063ec26ca9537d7534bb3730f08e3174ad68b79279ff0f"
+            },
+            {
+              "name": "deepseek-harness-0.2.2-rc.3-macos-x64.dmg",
+              "url": "https://github.com/zq0929/dsh-rc/releases/download/dsh-v0.2.2-rc.3/deepseek-harness-0.2.2-rc.3-macos-x64.dmg",
+              "size": 299303366,
+              "digest": "sha256:302be2d00276917c1e81bb1d8ebda5a0fc2cde466f917ea13f40731152b2d11b"
+            },
+            {
+              "name": "deepseek-harness-0.2.2-rc.3-macos-x64.zip",
+              "url": "https://github.com/zq0929/dsh-rc/releases/download/dsh-v0.2.2-rc.3/deepseek-harness-0.2.2-rc.3-macos-x64.zip",
+              "size": 389691891,
+              "digest": "sha256:878cb8c4273cae701d6933fc9ffdcb060e9180ffb2a5097603e9c8825058fabd"
+            },
+            {
+              "name": "deepseek-harness-0.2.2-rc.3-windows-x64-unsigned.exe",
+              "url": "https://github.com/zq0929/dsh-rc/releases/download/dsh-v0.2.2-rc.3/deepseek-harness-0.2.2-rc.3-windows-x64-unsigned.exe",
+              "size": 323116505,
+              "digest": "sha256:2c36dd60f053dc6d960aa5355546252911af41fe744b97160c275f5ce4927e03"
+            },
+            {
+              "name": "SHA256SUMS.txt",
+              "url": "https://github.com/zq0929/dsh-rc/releases/download/dsh-v0.2.2-rc.3/SHA256SUMS.txt",
+              "size": 555,
+              "digest": "sha256:40f95c52047ce16cd330900c90c95e80a3162877bbba692b5147b1a52fd361bf"
+            }
+          ]
+        },
         {
           "tag": "dsh-v0.2.2-rc.2",
           "version": "0.2.2-rc.2",
